@@ -1,0 +1,9 @@
+CST Swin MLP for CIFAR-10
+Copyright 2026 takumiecd
+
+Training and evaluation code incorporates material from cst-research
+(Copyright 2026 takumiecd, Apache License 2.0).
+
+third_party/swin_mlp.py comes from Microsoft Swin-Transformer commit
+f82860bfb5225915aca09c3227159ee9e1df874d and is distributed under the MIT
+license in third_party/LICENSE. Copyright Microsoft Corporation.
