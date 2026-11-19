@@ -10,7 +10,8 @@ hosts the three final checkpoints as Safetensors.
 
 Clone this repository, create a Python 3.11 environment and use an RGB image
 representative of one of the ten CIFAR-10 classes. The script downloads the
-selected weights on first use. CPU inference is the default.
+selected weights through `torchcst.hub.from_pretrained()` on first use.
+CPU inference is the default.
 
 ```bash
 git clone https://github.com/takumiecd/cst-swin-mlp-cifar10.git

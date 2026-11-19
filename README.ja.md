@@ -8,8 +8,8 @@ CIFAR-10で一から学習した小型のSwin MLPです。窓内でトークン�
 
 ## 推論
 
-Python 3.11の環境を用意し、CIFAR-10の10クラスにあたる画像を指定します。初回に重みを
-ダウンロードして、既定ではCPUで推論します。
+Python 3.11の環境を用意し、CIFAR-10の10クラスにあたる画像を指定します。初回は
+`torchcst.hub.from_pretrained()` が重みを取得し、既定ではCPUで推論します。
 
 ```bash
 git clone https://github.com/takumiecd/cst-swin-mlp-cifar10.git

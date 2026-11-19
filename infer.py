@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+from functools import partial
 from pathlib import Path
 
 import torch
-from huggingface_hub import hf_hub_download
 from PIL import Image
-from safetensors.torch import load_file
+from torchcst.hub import from_pretrained, load_safetensors
 from torchvision import transforms
 
 from train import load_swin, make_model
@@ -62,19 +62,17 @@ def load_model(
     device: str = "cpu",
     revision: str | None = None,
 ) -> torch.nn.Module:
-    model = build_model(variant)
-    if weights is None:
-        weights = hf_hub_download(
-            HUB_REPO, f"{variant}.safetensors", revision=revision, token=False
-        )
-    incoming = load_file(weights)
-    state = model.state_dict()
-    expected = {key for key, value in state.items() if isinstance(value, torch.Tensor)}
-    if incoming.keys() != expected:
-        raise ValueError(f"Tensor keys in {weights} do not match the {variant} model")
-    state.update(incoming)
-    model.load_state_dict(state)
-    return model.to(device).eval()
+    factory = partial(build_model, variant)
+    if weights is not None:
+        return load_safetensors(weights, model_factory=factory, device=device)
+    return from_pretrained(
+        HUB_REPO,
+        model_factory=factory,
+        filename=f"{variant}.safetensors",
+        device=device,
+        revision=revision,
+        token=False,
+    )
 
 
 @torch.inference_mode()
